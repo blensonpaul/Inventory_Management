@@ -1,0 +1,62 @@
+select and upload a Master-stock excel file that will have these 4 sheets with below Names:
+"Stock-In-Hand"
+"New-Order"
+"Out-stock"
+"Not-Available"
+ignore and keep the other sheets as it is 
+
+
+"Stock-In-Hand" sheet labels:
+
+"Sl No", "Part Number", "Part Description", "Qty", "Unit Weight(gm)","HS Code", "Origin", "Location", "KME Case Ref", "Ref", "BO lookup", "SO Number", "SRV Remarks", "Date (added) yyy.mm.dd", "REFERENCE", "D/NO", "srv print"
+
+"New-Order" sheet labels:
+"Sl No", "Part Number", "Part Description", "Req-Qty", "REFERENCE", "D/NO", "Date", "Mail Reference"
+
+"Out-stock" sheet labels:
+"Sl No", "Part Number", "Part Description", "Qty", "Unit Weight(gm)","HS Code", "Origin", "Location", "KME Case Ref", "Ref", "BO lookup", "SO Number", "SRV Remarks", "Date (added) yyy.mm.dd", "REFERENCE", "D/NO", "Batch/ Case", "Date", "Mail Reference", "srv print"
+
+"Not-Available" sheet labels:
+"Sl No", "Part Number", "Part Description", "Req-Qty", "REFERENCE", "D/NO", "Date", "Mail Reference", "NA-Qty"
+
+
+"Stock-In-Hand" sheet represents stock in hand, Newly arrived stock added here manually.
+-same Part Number can arrive on different dates
+-same Part Number can arrive on same date with multiple lines 
+-same Part number can have different HS Code & Origin 
+
+"New-Order" sheet will contain new packing orders which we are going to be picked from the stock 
+
+---------------
+
+Write a python (google collab) full code to accept the excel file with above sheets 
+create a picking list as per the New-Order sheet and
+Record the picking list in the Out-stock sheet 
+
+---------------
+detailed picking list generation/recording  algorithm
+take the "New-Order" sheet "Part Number", "Req-Qty" and do a for loop in the "Stock-In-Hand" sheet 
+
+when the part number is matching there are these cases
+1) when the "Stock-In-Hand" quantity matching exactly then record it in the "Out-stock" sheet and delete the line from the "Stock-In-Hand" sheet (If there is error for deleting line then you can subtract the quantity from the "Stock-In-Hand" sheet)
+2) when the "Stock-In-Hand" quantity is greater then "New-Order" quantity then record it in the "Out-stock" sheet and subtract the quantity from the "Stock-In-Hand" sheet
+3) when the "Stock-In-Hand" quantity is less then "New-Order" quantity (but not zero) then record it in the "Out-stock" sheet and subtract the quantity from the "Stock-In-Hand" sheet and repeat the loop. keep track of "total picked quantity" for calculating not available quantity later
+(This is because for example "Stock-In-Hand" sheet may contain 10 quantities in 10 lines with 1 quantity in each line)
+4) If still(after going through all lines of the same part number) "New-Order" quantities are not picked then record the not available quantity "NA-Qty" in the "Not-Available" sheet by subtracting Total Picked quantity from "Req-Qty".
+ 
+while recording Picking list in "Out-stock" sheet Give the values of "REFERENCE", "D/NO", "Date", "Mail Reference" as per New-Order sheet.
+-Keep the "Batch/ Case" empty which will be filled manually after packing.
+
+at the end
+-clear the New-Order sheet data 
+
+download the updated Master-stock along with the other unused sheets with timestamp as the filename
+
+
+
+
+
+
+     
+
+
